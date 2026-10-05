@@ -1,0 +1,339 @@
+{
+  "cases": [
+    {
+      "name": "英文加法",
+      "request": {
+        "model": "clef-flash",
+        "state": "Solve the arithmetic question.",
+        "questions": {
+          "answer": {
+            "type": "choice",
+            "instructions": "What is 2 + 3?",
+            "criteria": {
+              "four": "4",
+              "five": "5",
+              "six": "6"
+            }
+          }
+        }
+      },
+      "expected": {
+        "answer": "five"
+      },
+      "input_tokens": 149,
+      "answer": {
+        "answer": {
+          "type": "choice",
+          "choice": "five",
+          "confidence": 0.9807,
+          "probabilities": {
+            "four": 0.0102,
+            "five": 0.9807,
+            "six": 0.009
+          }
+        }
+      }
+    },
+    {
+      "name": "英文乘法",
+      "request": {
+        "model": "clef-flash",
+        "state": "Solve the arithmetic question.",
+        "questions": {
+          "answer": {
+            "type": "choice",
+            "instructions": "What is 17 times 23?",
+            "criteria": {
+              "n391": "391",
+              "n381": "381",
+              "n401": "401"
+            }
+          }
+        }
+      },
+      "expected": {
+        "answer": "n391"
+      },
+      "input_tokens": 166,
+      "answer": {
+        "answer": {
+          "type": "choice",
+          "choice": "n391",
+          "confidence": 0.9396,
+          "probabilities": {
+            "n391": 0.9396,
+            "n381": 0.0125,
+            "n401": 0.0479
+          }
+        }
+      }
+    },
+    {
+      "name": "中文应用题",
+      "request": {
+        "model": "clef-flash",
+        "state": "小明有3个苹果，又买了2个苹果。",
+        "questions": {
+          "answer": {
+            "type": "choice",
+            "instructions": "小明现在一共有几个苹果？",
+            "criteria": {
+              "three": "3个",
+              "five": "5个",
+              "six": "6个"
+            }
+          }
+        }
+      },
+      "expected": {
+        "answer": "five"
+      },
+      "input_tokens": 156,
+      "answer": {
+        "answer": {
+          "type": "choice",
+          "choice": "five",
+          "confidence": 0.9705,
+          "probabilities": {
+            "three": 0.0107,
+            "five": 0.9705,
+            "six": 0.0188
+          }
+        }
+      }
+    },
+    {
+      "name": "中文常识",
+      "request": {
+        "model": "clef-flash",
+        "state": "请选择正确的答案。",
+        "questions": {
+          "answer": {
+            "type": "choice",
+            "instructions": "法国的首都是哪座城市？",
+            "criteria": {
+              "paris": "巴黎",
+              "london": "伦敦",
+              "berlin": "柏林"
+            }
+          }
+        }
+      },
+      "expected": {
+        "answer": "paris"
+      },
+      "input_tokens": 149,
+      "answer": {
+        "answer": {
+          "type": "choice",
+          "choice": "paris",
+          "confidence": 0.9856,
+          "probabilities": {
+            "paris": 0.9856,
+            "london": 0.0083,
+            "berlin": 0.0061
+          }
+        }
+      }
+    },
+    {
+      "name": "真假判断",
+      "request": {
+        "model": "clef-flash",
+        "state": "Verify each claim using basic arithmetic.",
+        "questions": {
+          "true_claim": {
+            "type": "noul",
+            "instructions": "Is 10 greater than 7?"
+          },
+          "false_claim": {
+            "type": "noul",
+            "instructions": "Is 2 + 2 equal to 5?"
+          }
+        }
+      },
+      "expected": {
+        "true_claim": true,
+        "false_claim": false
+      },
+      "input_tokens": 240,
+      "answer": {
+        "true_claim": {
+          "type": "noul",
+          "noul": 0.956
+        },
+        "false_claim": {
+          "type": "noul",
+          "noul": 0.0534
+        }
+      }
+    },
+    {
+      "name": "中文情感分类",
+      "request": {
+        "model": "clef-flash",
+        "state": "这家店服务很差，等了一个小时还没有上菜，我很失望。",
+        "questions": {
+          "sentiment": {
+            "type": "choice",
+            "instructions": "这段评论的情感是什么？",
+            "criteria": {
+              "positive": "正面，好评",
+              "negative": "负面，差评",
+              "neutral": "中性，无明显情感"
+            }
+          }
+        }
+      },
+      "expected": {
+        "sentiment": "negative"
+      },
+      "input_tokens": 162,
+      "answer": {
+        "sentiment": {
+          "type": "choice",
+          "choice": "negative",
+          "confidence": 0.9727,
+          "probabilities": {
+            "positive": 0.0143,
+            "negative": 0.9727,
+            "neutral": 0.013
+          }
+        }
+      }
+    },
+    {
+      "name": "JSON发票判断",
+      "request": {
+        "model": "clef-flash",
+        "state": {
+          "invoice": {
+            "vendor": "Acme",
+            "total": 1250.0,
+            "currency": "USD",
+            "status": "overdue"
+          }
+        },
+        "questions": {
+          "status": {
+            "type": "choice",
+            "instructions": "What is the invoice status?",
+            "criteria": {
+              "paid": "Invoice is paid.",
+              "overdue": "Invoice is past due.",
+              "draft": "Not sent."
+            }
+          },
+          "large": {
+            "type": "noul",
+            "instructions": "Is the total above 1000 USD?"
+          },
+          "currency": {
+            "type": "choice",
+            "instructions": "What is the invoice currency?",
+            "criteria": {
+              "usd": "USD",
+              "eur": "EUR",
+              "cny": "CNY"
+            }
+          }
+        }
+      },
+      "expected": {
+        "status": "overdue",
+        "large": true,
+        "currency": "usd"
+      },
+      "input_tokens": 343,
+      "answer": {
+        "status": {
+          "type": "choice",
+          "choice": "overdue",
+          "confidence": 0.9692,
+          "probabilities": {
+            "paid": 0.019,
+            "overdue": 0.9692,
+            "draft": 0.0119
+          }
+        },
+        "large": {
+          "type": "noul",
+          "noul": 0.9693
+        },
+        "currency": {
+          "type": "choice",
+          "choice": "usd",
+          "confidence": 0.9615,
+          "probabilities": {
+            "usd": 0.9615,
+            "eur": 0.0208,
+            "cny": 0.0177
+          }
+        }
+      }
+    },
+    {
+      "name": "中文工单路由",
+      "request": {
+        "model": "clef-flash",
+        "state": "我们的结账页面一直返回服务器错误，所有客户都无法下单，请马上修复！",
+        "questions": {
+          "department": {
+            "type": "choice",
+            "instructions": "应该交给哪个团队处理？",
+            "criteria": {
+              "billing": "财务团队：付款或发票问题",
+              "technical": "技术团队：程序故障或服务中断",
+              "sales": "销售团队：新产品咨询"
+            }
+          },
+          "urgency": {
+            "type": "choice",
+            "instructions": "应该何时处理？",
+            "criteria": {
+              "today": "今天立刻处理",
+              "week": "本周内处理",
+              "later": "可以以后处理"
+            }
+          },
+          "outage": {
+            "type": "noul",
+            "instructions": "是否存在服务中断？"
+          }
+        }
+      },
+      "expected": {
+        "department": "technical",
+        "urgency": "today",
+        "outage": true
+      },
+      "input_tokens": 337,
+      "answer": {
+        "department": {
+          "type": "choice",
+          "choice": "technical",
+          "confidence": 0.988,
+          "probabilities": {
+            "billing": 0.0078,
+            "technical": 0.988,
+            "sales": 0.0043
+          }
+        },
+        "urgency": {
+          "type": "choice",
+          "choice": "today",
+          "confidence": 0.9607,
+          "probabilities": {
+            "today": 0.9607,
+            "week": 0.0193,
+            "later": 0.0199
+          }
+        },
+        "outage": {
+          "type": "noul",
+          "noul": 0.8991
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "model": "clef-flash",
+  "state": "小明有3个苹果，又买了2个苹果。",
+  "questions": {
+    "answer": {
+      "type": "choice",
+      "instructions": "小明现在一共有几个苹果？",
+      "criteria": {"three": "3个", "five": "5个", "six": "6个"}
+    },
+    "more_than_four": {"type": "noul", "instructions": "小明现在是否有超过4个苹果？"},
+    "quantity": {
+      "type": "score",
+      "instructions": "小明的苹果数量属于哪一级？",
+      "criteria": ["0到2个", "3到4个", "5个或以上"]
+    }
+  }
+}

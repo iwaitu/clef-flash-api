@@ -1,0 +1,7 @@
+*
+!Dockerfile
+!requirements-api.txt
+!app.py
+!config.json
+!example-request.json
+!healthcheck.py

@@ -1,0 +1,13 @@
+# Keep the tested vLLM/PyTorch stack from the digest-pinned base image.
+# Pin the API and the working CUDA 13.0 compiler packages, without upgrading torch.
+fastapi==0.136.3
+uvicorn==0.54.0
+pydantic==2.13.5
+pydantic-core==2.46.5
+starlette==1.7.0
+nvidia-cuda-nvcc==13.0.88
+nvidia-cuda-crt==13.0.88
+nvidia-nvvm==13.0.88
+nvidia-cudnn-frontend==1.30.0
+transformers==5.18.0
+compressed-tensors==0.17.0

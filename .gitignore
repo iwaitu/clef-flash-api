@@ -1,0 +1,38 @@
+# Machine-specific configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Models, caches, Python environments
+models/
+*.safetensors
+*.bin
+*.pt
+*.pth
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.cache/
+
+# Runtime files, reports, and image exports
+*.log
+*.lock
+*.pid
+*.tar
+*.tar.gz
+*.tar.sha256
+*.zip
+*-test-results.json
+archive-manifest.json
+image-config.json
+remote-image-config.json
+remote-manifest.json
+release-metadata.json
+model-hash-check.txt
+
+# Editor / OS files
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

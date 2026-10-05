@@ -1,0 +1,9 @@
+{
+  "model_path": "/models/clef-flash",
+  "host": "127.0.0.1",
+  "port": 18190,
+  "max_model_len": 4096,
+  "kv_cache_gib": 0.5,
+  "max_pending_requests": 16,
+  "max_body_bytes": 262144
+}

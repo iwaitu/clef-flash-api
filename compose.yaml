@@ -1,0 +1,32 @@
+name: clef-flash-api
+services:
+  clef-flash-api:
+    image: iwaitu/clef-flash-api:latest
+    build:
+      context: .
+    restart: unless-stopped
+    init: true
+    gpus: all
+    shm_size: 2gb
+    stop_grace_period: 45s
+    ports:
+      - "${CLEF_BIND_ADDRESS:-127.0.0.1}:${CLEF_HOST_PORT:-18190}:8000"
+    environment:
+      CLEF_MAX_MODEL_LEN: "${CLEF_MAX_MODEL_LEN:-4096}"
+      CLEF_KV_CACHE_GIB: "${CLEF_KV_CACHE_GIB:-0.5}"
+      CLEF_MAX_PENDING_REQUESTS: "${CLEF_MAX_PENDING_REQUESTS:-16}"
+    volumes:
+      - type: bind
+        source: "${CLEF_MODEL_DIR:-./models/clef-flash-NVFP4}"
+        target: /models/clef-flash
+        read_only: true
+        bind:
+          create_host_path: false
+      - clef-cache:/root/.cache
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  clef-cache:
