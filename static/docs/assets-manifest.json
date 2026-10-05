@@ -1,0 +1,32 @@
+{
+  "packages": {
+    "swagger-ui-dist": {
+      "version": "5.33.1",
+      "license": "Apache-2.0",
+      "metadata_url": "https://registry.npmjs.org/swagger-ui-dist/5.33.1",
+      "tarball": "https://registry.npmjs.org/swagger-ui-dist/-/swagger-ui-dist-5.33.1.tgz",
+      "integrity": "sha512-H872wWkA53bFIsGgi7OWgmq+CRWw3nFQGdJWRqOB9wNwTm6e5ol34+qPDkV4AJlK+gglM2EsJiOOzsGsEGbluA=="
+    },
+    "redoc": {
+      "version": "2.5.4",
+      "license": "MIT",
+      "metadata_url": "https://registry.npmjs.org/redoc/2.5.4",
+      "tarball": "https://registry.npmjs.org/redoc/-/redoc-2.5.4.tgz",
+      "integrity": "sha512-M6jWhG1qoBnH6TFmzJnstyCZ87HmOY/UzDm78mHiYihEdlV/YcS9ogOo1NlElnJMeLsyxHFe2yFc4sNjHTrABQ=="
+    }
+  },
+  "files": {
+    "redoc-logo-mini.svg": "1dab4315f8de2177b2b2726b29e84a26314c69cd27d692228947c0058793d5a7",
+    "swagger-ui-bundle.js": "050bc415ee7048dcd881682678f720264e7da5e373f7461d7c58c755305255f7",
+    "swagger-ui.css": "1ac324f7dcd27e4b9386b4bd6421271ec147e922a22c05ba24b11515e9aa6321",
+    "swagger-ui-LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "redoc.standalone.js": "ab92b108083747bccfff2ddd91aa97ad6b328cb08be986246f34961b67202cc0",
+    "redoc-LICENSE": "d3026d549cf68ab7355bcfa85877bf8f845b3334a7efbfdc63936432fb34ff0e",
+    "favicon.svg": "6e0af9317573bd158806ad7614112ef0e6a6aba2a4df1e057053d3c5ad28f542"
+  },
+  "redoc_logo": {
+    "source": "https://cdn.redoc.ly/redoc/logo-mini.svg",
+    "sha256": "1dab4315f8de2177b2b2726b29e84a26314c69cd27d692228947c0058793d5a7",
+    "patch": "Embed the upstream footer logo as a data URI in redoc.standalone.js"
+  }
+}

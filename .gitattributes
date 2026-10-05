@@ -1,5 +1,7 @@
 * text=auto eol=lf
 *.ps1 text eol=crlf
+# Preserve upstream asset bytes, including license formatting.
+static/docs/* -text -whitespace
 *.safetensors binary
 *.tar binary
 *.zip binary

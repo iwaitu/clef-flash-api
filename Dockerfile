@@ -9,6 +9,7 @@ RUN python3 -m pip install --no-cache-dir --no-deps -r /app/requirements-api.txt
     && python3 -c "import fastapi,uvicorn,pydantic,vllm,torch; print(fastapi.__version__,uvicorn.__version__,pydantic.__version__,vllm.__version__,torch.__version__)"
 
 COPY app.py config.json example-request.json healthcheck.py /app/
+COPY static/docs /app/static/docs
 ENV CLEF_MODEL_PATH=/models/clef-flash \
     CLEF_HOST=0.0.0.0 \
     CLEF_PORT=8000 \
@@ -24,7 +25,7 @@ ENV CLEF_MODEL_PATH=/models/clef-flash \
     PYTHONUNBUFFERED=1
 
 LABEL org.opencontainers.image.title="clef-flash-api" \
-      org.opencontainers.image.version="0.1.0" \
+      org.opencontainers.image.version="0.1.1" \
       org.opencontainers.image.description="Local Clef Flash NVFP4 structured decision API; mount model at /models/clef-flash"
 EXPOSE 8000
 HEALTHCHECK --interval=15s --timeout=5s --start-period=900s --retries=3 \

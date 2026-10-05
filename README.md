@@ -8,9 +8,15 @@
 - 镜像：`iwaitu/clef-flash-api:latest`，平台 `linux/amd64`
 - 默认服务地址：`http://127.0.0.1:18190`
 - 交互接口文档：`http://127.0.0.1:18190/docs`
+- 只读接口文档：`http://127.0.0.1:18190/redoc`
 
 镜像包含 API 和运行环境。**模型权重需单独下载、挂载**，仓库和镜像均不包含模型文件。
 本服务提供 Clef 原生 `/v1/systemone` 协议；客户端应按照本文请求格式调用。
+
+从 0.1.1 起，Swagger UI、ReDoc、样式及图标均随代码和镜像打包，由服务本身提供。
+`/docs` 和 `/redoc` 无需连接外部 CDN、Google 字体或在线校验服务；断网时仍可查看文档，
+并通过 `/docs` 向本机服务发起请求。已部署旧版的机器可执行 `docker compose pull` 和
+`docker compose up -d --no-build` 更新，更新后需要重新加载模型。
 
 ## 运行要求
 
@@ -82,6 +88,7 @@ docker run -d --name clef-flash-api --gpus all --init --restart unless-stopped \
 | GET | `/v1/models` | 模型名称与能力 |
 | POST | `/v1/systemone` | 结构化判断 |
 | GET | `/docs` | 可直接填写请求并测试的 Swagger 文档 |
+| GET | `/redoc` | 只读 ReDoc 文档 |
 | GET | `/openapi.json` | 接口定义 |
 
 完整的三种问题类型示例见 [example-request.json](example-request.json)。
@@ -210,7 +217,7 @@ PowerShell 辅助脚本：
 .\export-image.ps1
 ```
 
-导出文件附带 SHA256 校验文件，可使用 `docker load -i clef-flash-api-0.1.0-linux-amd64.tar` 离线导入。
+导出文件附带 SHA256 校验文件，可使用 `docker load -i clef-flash-api-0.1.1-linux-amd64.tar` 离线导入。
 模型目录仍需单独带到目标机器。构建上下文采用白名单，模型、缓存和日志不会进入镜像。
 
 ## 验证与响应时间
@@ -237,5 +244,17 @@ python verify_api.py
 可通过 `CLEF_API_BASE_URL` 设置测试地址。`test-fixtures.json` 包含全部测试输入和原生概率基线。
 脚本生成 `api-test-results.json`，功能失败会返回非零退出码；概率差异单独记录为 `MATCH` 或 `DIFFERENT`。
 PowerShell 可执行 `.\test-api.ps1` 发起示例请求，或 `.\benchmark-windows.ps1` 测试持续连接下的响应时间。
+
+文档静态资源位于 `static/docs`，固定版本、许可证和 SHA256 记录在该目录内。
+维护资源时可运行 `python scripts/vendor-doc-assets.py`；此操作需要网络，构建及服务启动不运行该脚本。
+`test_offline_docs.py` 在不加载模型的情况下检查资源完整性、文档路由和反向代理路径前缀：
+
+```bash
+docker run --rm --network none --entrypoint python3 \
+  -v "$PWD/test_offline_docs.py:/app/test_offline_docs.py:ro" \
+  iwaitu/clef-flash-api:latest /app/test_offline_docs.py
+```
+
+实现参考：[FastAPI 文档静态资源自托管](https://fastapi.tiangolo.com/how-to/custom-docs-ui-assets/)。
 
 模型及其自带代码的使用条件以 [模型仓库](https://huggingface.co/alpha-x-ai/clef-flash-NVFP4) 为准。

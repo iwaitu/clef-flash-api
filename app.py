@@ -15,7 +15,11 @@ from pathlib import Path
 from typing import Annotated, Literal
 
 from fastapi import FastAPI, HTTPException, Request, Response
+from fastapi.openapi.docs import (
+    get_redoc_html, get_swagger_ui_html, get_swagger_ui_oauth2_redirect_html,
+)
 from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field, JsonValue, model_validator
 
 HERE = Path(__file__).resolve().parent
@@ -34,7 +38,7 @@ if not (1 <= CONFIG["port"] <= 65535 and 256 <= CONFIG["max_model_len"] <= 16384
         and CONFIG["max_body_bytes"] > 0):
     raise ValueError("Invalid Clef service configuration.")
 MODEL_NAME = "clef-flash"
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 LOG = logging.getLogger("clef-api")
 
 
@@ -223,7 +227,40 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Clef Flash NVFP4 本地判断 API", version=VERSION, lifespan=lifespan,
+              docs_url=None, redoc_url=None,
               description="常驻并预热的结构化判断服务。支持文字和 JSON；输入超长时拒绝，保留原文完整性。")
+app.mount("/static/docs", StaticFiles(directory=HERE / "static" / "docs"), name="docs-assets")
+
+
+@app.get("/docs", include_in_schema=False)
+async def swagger_docs(request: Request):
+    root = request.scope.get("root_path", "").rstrip("/")
+    return get_swagger_ui_html(
+        openapi_url=root + app.openapi_url,
+        title=app.title + " - Swagger UI",
+        swagger_js_url=root + "/static/docs/swagger-ui-bundle.js",
+        swagger_css_url=root + "/static/docs/swagger-ui.css",
+        swagger_favicon_url=root + "/static/docs/favicon.svg",
+        oauth2_redirect_url=root + app.swagger_ui_oauth2_redirect_url,
+        swagger_ui_parameters={"validatorUrl": None},
+    )
+
+
+@app.get(app.swagger_ui_oauth2_redirect_url, include_in_schema=False)
+async def swagger_oauth_redirect():
+    return get_swagger_ui_oauth2_redirect_html()
+
+
+@app.get("/redoc", include_in_schema=False)
+async def redoc_docs(request: Request):
+    root = request.scope.get("root_path", "").rstrip("/")
+    return get_redoc_html(
+        openapi_url=root + app.openapi_url,
+        title=app.title + " - ReDoc",
+        redoc_js_url=root + "/static/docs/redoc.standalone.js",
+        redoc_favicon_url=root + "/static/docs/favicon.svg",
+        with_google_fonts=False,
+    )
 
 
 @app.middleware("http")
